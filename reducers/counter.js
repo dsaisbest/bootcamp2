@@ -2,14 +2,17 @@ import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
 import axios from 'axios';
 const getData = createAsyncThunk('data/fetchData', async (link, thunkAPI) => {
   const data = await axios
-    .get('https://api2.binance.com/api/v3/ticker/24hr')
-    .then(response => response.data)
+    .get(link)
+    .then(response => response.data) 
     .then(dataList => {
       console.log(dataList[0]);
-      const list =  dataList.map(ele => ({symbol: ele.symbol,averagePrice:ele.weightedAvgPrice}));
-      return list
+      const list = dataList.map(ele => ({
+        symbol: ele.symbol,
+        averagePrice: ele.weightedAvgPrice,
+      }));
+      return list;
     });
-  
+
   return data;
 });
 

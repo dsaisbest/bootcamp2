@@ -3,11 +3,11 @@ import * as React from 'react';
 import styles from './Styles'
 
 export default function Details({ route, navigation }) {
-    const data = route.params;
-    console.log(data);
+    const {Detaildata} = route.params;
+    console.log('parameters from routes',Detaildata.symbol);
   return (
     <View style={styles.container}>
-      <Text>Details +{data.data}</Text>
+      <Text>price of {Detaildata.symbol} is {Detaildata.averagePrice}</Text>
     </View>
   )
 }

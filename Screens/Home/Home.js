@@ -1,4 +1,4 @@
-import {View, Text, Button, FlatList, StyleSheet} from 'react-native';
+import {View, Text, Button, FlatList, StyleSheet, TouchableOpacity} from 'react-native';
 import * as React from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import styles from './Styles';
@@ -21,7 +21,7 @@ export default function Home({navigation}) {
   const apiData = useSelector(state => state.counter.apiData);
   const dispatch = useDispatch();
   React.useEffect(() => {
-    dispatch(getData());
+    dispatch(getData('https://api2.binance.com/api/v3/ticker/24hr'));
   }, []);
 
   return (
@@ -30,10 +30,13 @@ export default function Home({navigation}) {
         <FlatList
           data={apiData}
           renderItem={(item, ind) => (
+            <TouchableOpacity onPress={()=>{navigation.navigate('Details',
+            {Detaildata:item.item})}}>
             <Info
               symbol={item.item.symbol}
               averagePrice={item.item.averagePrice}
             />
+            </TouchableOpacity>
           )}
           keyExtractor={(item, id) => id}
         />
