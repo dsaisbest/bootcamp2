@@ -25,6 +25,7 @@ export const counterSlice = createSlice({
   name: 'details',
   initialState: {
     details: [],
+    
   },
   reducers: {
     addData: (state, action) => {

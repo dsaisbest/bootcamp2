@@ -1,8 +1,15 @@
-import {View, Text, FlatList, TouchableOpacity, Image} from 'react-native';
+import {
+  View,
+  Text,
+  FlatList,
+  TouchableOpacity,
+  Image,
+  ActivityIndicator,
+} from 'react-native';
 import * as React from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import styles from './Styles';
-import {getData} from '../../reducers/counter';
+import {resetData, getData} from '../../reducers/counter';
 function Info(props) {
   return (
     <View style={styles.items}>
@@ -33,36 +40,49 @@ function Info(props) {
 }
 export default function Home({navigation}) {
   const apiData = useSelector(state => state.counter.apiData);
+  const loading = useSelector(state => state.counter.loading);
+  const pageNo = useSelector(state => state.counter.page);
   const dispatch = useDispatch();
+  const link = `https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=12&page=${pageNo}&sparkline=false`;
+  const link2 = `https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=12&page=1&sparkline=false`;
   React.useEffect(() => {
-    const link =
-      'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=50&page=1&sparkline=false';
     dispatch(getData(link));
   }, []);
 
   return (
     <View style={styles.container}>
-      {apiData ? (
-        <FlatList
-          data={apiData}
-          renderItem={({item}, ind) => (
-            <TouchableOpacity
-              onPress={() => {
-                navigation.navigate('Details',{id:item.id});
-              }}>
-              <Info
-                symbol={item.symbol}
-                averagePrice={item.averagePrice}
-                image={item.image}
-                name={item.name}
-                percentageChange={item.percentageChange}
-              />
-            </TouchableOpacity>
-          )}
-          keyExtractor={(item, id) => id}
-        />
+      <FlatList
+        data={apiData}
+        onEndReached={() => {
+          dispatch(getData(link));
+        }}
+        onEndReachedThreshold={0}
+        refreshing={loading}
+        onRefresh={() => {
+          dispatch(resetData(link2));
+        }}
+        scrollsToTop={false}
+        renderItem={({item}, ind) => (
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate('Details', {id: item.id, name: item.name});
+            }}>
+            <Info
+              symbol={item.symbol}
+              averagePrice={item.averagePrice}
+              image={item.image}
+              name={item.name}
+              percentageChange={item.percentageChange}
+            />
+          </TouchableOpacity>
+        )}
+        keyExtractor={(item, id) => id}
+      />
+
+      {loading ? (
+        <ActivityIndicator size="large" color="coral" />
       ) : (
-        <Text>...pending</Text>
+        <Text></Text>
       )}
     </View>
   );

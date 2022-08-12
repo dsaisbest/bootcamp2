@@ -14,50 +14,48 @@ export default function Lines(props) {
     console.log('check it');
   }, []);
   return (
-     <LineChart
-        data={{
-          labels: dataList
-            .filter((ele, id) => id % 3 === 0)
-            .map(ele => {
-              console.log(ele)
-              const time = ele.time>=12?'PM':'AM'
-              const data = (ele.time%12).toString() + time
-              return data
-              }),
-          datasets: [
-            {
-              data: dataList
-                .filter((ele, id) => (id % 3 === 0))
-                .map(ele =>ele.price ),
-            },
-          ],
-        }}
-        width={Dimensions.get('window').width} // from react-native
-        height={Dimensions.get('window').height/1.3}
-        yAxisLabel="$"
-        yAxisSuffix=""
-        yAxisInterval={1} // optional, defaults to 1
-        chartConfig={{
-          backgroundColor: 'black',
-          backgroundGradientFromOpacity: 0,
-          backgroundGradientFrom: 'white',
-          backgroundGradientTo: 'white',
-          decimalPlaces: 2, // optional, defaults to 2dp
-          color: (opacity = 0.1) => `rgba(19, 255, 19, ${opacity})`,
-          labelColor: (opacity = 1) => `rgba(0, 129, 91, ${opacity})`,
-          style: {
-            borderRadius: 60,
-            backgroundColor: 'blue',
-            
+    <LineChart
+      data={{
+        labels: dataList
+          .filter((ele, id) => id % 3 === 0)
+          .map(ele => {
+            console.log(ele);
+            const time = ele.time >= 12 ? 'PM' : 'AM';
+            const data = (ele.time % 12).toString() + time;
+            return data;
+          }),
+        datasets: [
+          {
+            data: dataList
+              .filter((ele, id) => id % 3 === 0)
+              .map(ele => ele.price),
           },
-          propsForDots: {
-            r: '5',
-            strokeWidth: '2',
-            stroke: 'purple',
-          },
-        }}
-        bezier
-      />
-    
+        ],
+      }}
+      width={Dimensions.get('window').width} // from react-native
+      height={Dimensions.get('window').height}
+      yAxisLabel="$"
+      yAxisSuffix=""
+      yAxisInterval={1} // optional, defaults to 1
+      chartConfig={{
+        backgroundColor: 'black',
+        backgroundGradientFromOpacity: 0,
+        backgroundGradientFrom: 'white',
+        backgroundGradientTo: 'white',
+        decimalPlaces: 2, // optional, defaults to 2dp
+        color: (opacity = 0.1) => `rgba(19, 255, 19, ${opacity})`,
+        labelColor: (opacity = 1) => `rgba(0, 129, 91, ${opacity})`,
+        style: {
+          borderRadius: 20,
+          backgroundColor: 'pink',
+        },
+        propsForDots: {
+          r: '4',
+          strokeWidth: '3',
+          stroke: 'darkgreen',
+        },
+      }}
+      bezier
+    />
   );
 }
