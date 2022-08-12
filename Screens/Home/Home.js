@@ -65,7 +65,7 @@ export default function Home({navigation}) {
         renderItem={({item}, ind) => (
           <TouchableOpacity
             onPress={() => {
-              navigation.navigate('Details', {id: item.id, name: item.name,negative:(item.percentageChange>=0)});
+              navigation.navigate('Details', {id: item.id, name: item.name,change:item.percentageChange});
             }}>
             <Info
               symbol={item.symbol}

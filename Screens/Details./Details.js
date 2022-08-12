@@ -2,7 +2,7 @@ import {View, Text, ScrollView} from 'react-native';
 import React from 'react';
 import Lines from './Lines';
 export default function Details({route, navigation}) {
-  console.log(route.params);
+  console.log('coming from details',route.params);
 
   return (
     <View>
@@ -16,7 +16,7 @@ export default function Details({route, navigation}) {
         {route.params.name}
       </Text>
       <View style={{flex:1,justifyContent:'flex-end',alignItems:'flex-start'}}>
-      <Lines id={route.params.id} />
+      <Lines id={route.params.id} change={route.params.change}/>
       </View>
     </View>
   );

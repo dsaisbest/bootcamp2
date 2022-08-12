@@ -3,11 +3,13 @@ import React from 'react';
 import {LineChart} from 'react-native-chart-kit';
 import {getDetails} from '../../reducers/details';
 import {useDispatch, useSelector} from 'react-redux';
+import { registerables } from 'chart.js';
 
 export default function Lines(props) {
+  
   const dataList = useSelector(state => state.details.details);
   const dispatch = useDispatch();
-  console.log(props);
+  console.log('coming from line',props);
   React.useEffect(() => {
     const link = `https://api.coingecko.com/api/v3/coins/${props.id}/market_chart?vs_currency=usd&days=1&interval=hourly`;
     dispatch(getDetails(link));
@@ -16,18 +18,9 @@ export default function Lines(props) {
   return (
     <LineChart
       data={{
-        labels: dataList
-          .filter((ele, id) => id % 3 === 0)
-          .map(ele => {
-            console.log(ele);
-            const time = ele.time >= 12 ? 'PM' : 'AM';
-            const data = (ele.time % 12).toString() + time;
-            return data;
-          }),
         datasets: [
           {
             data: dataList
-              .filter((ele, id) => id % 3 === 0)
               .map(ele => ele.price),
           },
         ],
@@ -39,19 +32,19 @@ export default function Lines(props) {
       yAxisInterval={1} // optional, defaults to 1
       chartConfig={{
         backgroundColor: 'black',
-        backgroundGradientFromOpacity: 0,
+        backgroundGradientFromOpacity: 1,
         backgroundGradientFrom: 'white',
         backgroundGradientTo: 'white',
         decimalPlaces: 2, // optional, defaults to 2dp
-        color: (opacity = 0.1) => `rgba(19, 255, 19, ${opacity})`,
-        labelColor: (opacity = 1) => `rgba(0, 129, 91, ${opacity})`,
+        color: (opacity = 0.1) => {return((props.change>0)?`rgba(90, 255, 0,${opacity})`:`rgba(255, 0, 0,${opacity})`)},
+        labelColor: (opacity = 1) => {return((props.change>0)?`rgba(90, 255, 0,${opacity})`:`rgba(255, 0, 0,${opacity})`)},
         style: {
           borderRadius: 20,
           backgroundColor: 'pink',
         },
         propsForDots: {
-          r: '4',
-          strokeWidth: '3',
+          r: '0',
+          strokeWidth: '5',
           stroke: 'darkgreen',
         },
       }}

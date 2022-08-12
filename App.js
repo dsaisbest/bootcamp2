@@ -14,7 +14,10 @@ function App() {
     <Provider store={store}>
     <NavigationContainer>
       <Stack.Navigator initialRouteName='Home'>
-        <Stack.Screen name="Home" component={Home} />
+        <Stack.Screen name="Home" component={Home} options={{
+          headerStyle:{backgroundColor:'coral'}
+          
+        }}/>
         <Stack.Screen name="Details" component={Details} />
       </Stack.Navigator>
     </NavigationContainer>
