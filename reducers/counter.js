@@ -11,7 +11,7 @@ const getData = createAsyncThunk('data/fetchData', async (link, thunkAPI) => {
         averagePrice: ele.current_price,
         image: ele.image,
         name: ele.name,
-        percentageChange: ele.price_change_24h,
+        percentageChange: ele.price_change_percentage_24h,
         id: ele.id,
       }));
       return list;
