@@ -1,23 +1,21 @@
-import {View, Text, ScrollView} from 'react-native';
+import {Text, ScrollView} from 'react-native';
 import React from 'react';
 import Lines from './Lines';
 export default function Details({route, navigation}) {
-  console.log('coming from details',route.params);
+  console.log('coming from details', route.params);
 
   return (
-    <View>
+    <ScrollView>
       <Text
         style={{
           backgroundColor: 'white',
-          fontSize: 19,
-          fontWeight: '700',
+          fontSize: 22,
+          fontWeight: '200',
           textAlign: 'center',
         }}>
         {route.params.name}
       </Text>
-      <View style={{flex:1,justifyContent:'center',alignItems:'center'}}>
-      <Lines id={route.params.id} change={route.params.change}/>
-      </View>
-    </View>
+      <Lines id={route.params.id} change={route.params.change} />
+    </ScrollView>
   );
 }
