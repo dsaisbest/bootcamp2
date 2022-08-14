@@ -23,6 +23,10 @@ export default function Home({navigation}) {
     dispatch(getData(link));
   }, []);
   const [search, setSearch] = React.useState('');
+  const renderingData = apiData.filter(element =>
+    element.name.toLowerCase().startsWith(search.toLowerCase()),
+  );
+  console.log(renderingData,'getting data');
   return (
     <View style={styles.container}>
       <TextInput
@@ -32,7 +36,7 @@ export default function Home({navigation}) {
         onChangeText={setSearch}
       />
       <FlatList
-        data={apiData}
+        data={renderingData}
         onEndReached={() => {
           dispatch(getData(link));
         }}
