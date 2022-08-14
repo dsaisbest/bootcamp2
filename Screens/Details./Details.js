@@ -15,7 +15,7 @@ export default function Details({route, navigation}) {
         }}>
         {route.params.name}
       </Text>
-      <View style={{flex:1,justifyContent:'flex-end',alignItems:'flex-start'}}>
+      <View style={{flex:1,justifyContent:'center',alignItems:'center'}}>
       <Lines id={route.params.id} change={route.params.change}/>
       </View>
     </View>

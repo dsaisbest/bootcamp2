@@ -58,7 +58,6 @@ export const counterSlice = createSlice({
     builder.addCase(resetData.fulfilled,(state,action)=>{
       console.log(action.payload);
       state.apiData=action.payload;
-      state.loading=false;
       state.page = 2;
       
     });

@@ -57,12 +57,12 @@ export default function Home({navigation}) {
           dispatch(getData(link));
         }}
         onEndReachedThreshold={0}
-        refreshing={loading}
+        refreshing={false}
         onRefresh={() => {
           dispatch(resetData(link2));
         }}
         scrollsToTop={false}
-        renderItem={({item}, ind) => (
+        renderItem={({item}, ind) => ( 
           <TouchableOpacity
             onPress={() => {
               navigation.navigate('Details', {id: item.id, name: item.name,change:item.percentageChange});

@@ -36,6 +36,10 @@ export const counterSlice = createSlice({
     builder.addCase(getDetails.fulfilled, (state, action) => {
       state.details = action.payload;
     });
+    builder.addCase(getDetails.pending,(state,action)=>{
+      state.details=[]
+    })
+    
   },
 });
 

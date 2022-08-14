@@ -7,7 +7,7 @@ const styles = StyleSheet.create({
     },
     "items":{
         backgroundColor:'coral',
-        margin: 2,
+        margin: 1,
         padding:15,
         flex:1,
         justifyContent:"space-between",
