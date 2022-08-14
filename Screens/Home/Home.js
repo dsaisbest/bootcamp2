@@ -3,41 +3,15 @@ import {
   Text,
   FlatList,
   TouchableOpacity,
-  Image,
   ActivityIndicator,
+  TextInput,
 } from 'react-native';
 import * as React from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import styles from './Styles';
 import {resetData, getData} from '../../reducers/counter';
-function Info(props) {
-  return (
-    <View style={styles.items}>
-      <View style={styles['sub-itmes']}>
-        <Image source={{uri: props.image}} style={styles.logo} />
-        <Text style={{fontWeight: '700', fontSize: 15, textAlign: 'center'}}>
-          {props.name}
-        </Text>
-        <Text style={{fontStyle: 'italic', color: 'grey'}}>{props.symbol}</Text>
-      </View>
-      <View style={styles.price}>
-        <Text style={{fontWeight: '800', fontSize: 16}}>
-          {'\u0024'}
-          {props.averagePrice.toLocaleString()}
-        </Text>
-        <Text style={{fontWeight: '600', fontSize: 12}}>
-          {props.percentageChange > 0 ? (
-            <Text style={{color: 'green'}}>▲</Text>
-          ) : (
-            <Text style={{color: 'red'}}>▼</Text>
-          )}{' '}
-          {props.percentageChange.toFixed(3)}
-          <Text style={{fontSize: 10, fontWeight: '900'}}>%</Text>
-        </Text>
-      </View>
-    </View>
-  );
-}
+import Info from './Info';
+
 export default function Home({navigation}) {
   const apiData = useSelector(state => state.counter.apiData);
   const loading = useSelector(state => state.counter.loading);
@@ -48,9 +22,15 @@ export default function Home({navigation}) {
   React.useEffect(() => {
     dispatch(getData(link));
   }, []);
-
+  const [search, setSearch] = React.useState('');
   return (
     <View style={styles.container}>
+      <TextInput
+        style={styles.textinput}
+        placeholder="Search"
+        value={search}
+        onChangeText={setSearch}
+      />
       <FlatList
         data={apiData}
         onEndReached={() => {
@@ -61,11 +41,14 @@ export default function Home({navigation}) {
         onRefresh={() => {
           dispatch(resetData(link2));
         }}
-        scrollsToTop={false}
-        renderItem={({item}, ind) => ( 
+        renderItem={({item}) => (
           <TouchableOpacity
             onPress={() => {
-              navigation.navigate('Details', {id: item.id, name: item.name,change:item.percentageChange});
+              navigation.navigate('Details', {
+                id: item.id,
+                name: item.name,
+                change: item.percentageChange,
+              });
             }}>
             <Info
               symbol={item.symbol}

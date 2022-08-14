@@ -34,6 +34,14 @@ const styles = StyleSheet.create({
         flexDirection:"column",
         alignItems:'flex-end',
         justifyContent:'space-between'
+      },
+      'textinput':{
+        width:'100%',
+        height:60,
+        paddingLeft:20,
+        backgroundColor:'#B0E0E6',
+        fontSize:20,
+        fontWeight:'200'
       }
 })
 export default styles
