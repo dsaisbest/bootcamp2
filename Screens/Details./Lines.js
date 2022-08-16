@@ -3,7 +3,6 @@ import {
   Dimensions,
   ActivityIndicator,
   Text,
-  ScrollView,
 } from 'react-native';
 import React from 'react';
 import {LineChart} from 'react-native-chart-kit';
