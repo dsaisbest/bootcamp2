@@ -26,7 +26,7 @@ export default function Home({navigation}) {
   const renderingData = apiData.filter(element =>
     element.name.toLowerCase().startsWith(search.toLowerCase()),
   );
-  console.log(renderingData,'getting data');
+  
   return (
     <View style={styles.container}>
       <TextInput
@@ -45,24 +45,28 @@ export default function Home({navigation}) {
         onRefresh={() => {
           dispatch(resetData(link2));
         }}
-        renderItem={({item}) => (
-          <TouchableOpacity
-            onPress={() => {
-              navigation.navigate('Details', {
-                id: item.id,
-                name: item.name,
-                change: item.percentageChange,
-              });
-            }}>
-            <Info
-              symbol={item.symbol}
-              averagePrice={item.averagePrice}
-              image={item.image}
-              name={item.name}
-              percentageChange={item.percentageChange}
-            />
-          </TouchableOpacity>
-        )}
+        renderItem={({item}) => {
+          return (
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate('Details', {
+                  id: item.id,
+                  name: item.name,
+                  change: item.percentageChange,
+                });
+              }}>
+              <Info
+                symbol={item.symbol}
+                averagePrice={item.averagePrice}
+                image={item.image}
+                name={item.name}
+                percentageChange={item.percentageChange}
+                index={item.index}
+                favourite={item.favourite}
+              />
+            </TouchableOpacity>
+          );
+        }}
         keyExtractor={(item, id) => id}
       />
 

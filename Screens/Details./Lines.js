@@ -38,7 +38,7 @@ export default function Lines(props) {
   React.useEffect(() => {
     const link = `https://api.coingecko.com/api/v3/coins/${props.id}/market_chart?vs_currency=usd&days=1&interval=hourly`;
     dispatch(getDetails(link));
-    console.log('check it');
+   
   }, []);
   return (
     <View>

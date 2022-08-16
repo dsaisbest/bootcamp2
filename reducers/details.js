@@ -3,13 +3,13 @@ import axios from 'axios';
 const getDetails = createAsyncThunk(
   'details/fetchData',
   async (link, thunkAPI) => {
-    console.log('extracting data', link);
+   
     const data = await axios
       .get(link)
       .then(response => response.data)
       .then(dataList => {
         dataList = dataList.prices;
-        console.log(dataList);
+       
         const list = dataList.map(ele => ({
           time: new Date(ele[0] * 1000).getHours(),
           price: ele[1],

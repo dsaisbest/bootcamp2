@@ -2,7 +2,7 @@ import {Text, ScrollView} from 'react-native';
 import React from 'react';
 import Lines from './Lines';
 export default function Details({route, navigation}) {
-  console.log('coming from details', route.params);
+  
 
   return (
     <ScrollView>
