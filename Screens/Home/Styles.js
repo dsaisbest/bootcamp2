@@ -10,9 +10,11 @@ const styles = StyleSheet.create({
         margin: 1,
         padding:15,
         flex:1,
+        
         justifyContent:"space-between",
         flexDirection:"row",
-        borderRadius:3
+        borderRadius:3,
+        flexWrap:'wrap'
       },
       "logo":{
         width:50,
@@ -33,7 +35,9 @@ const styles = StyleSheet.create({
         flex:1,
         flexDirection:"column",
         alignItems:'flex-end',
-        justifyContent:'space-between'
+        justifyContent:'flex-start',
+        height:50,
+        flexWrap:"wrap"
       },
       'textinput':{
         width:'100%',
