@@ -1,11 +1,10 @@
 import { StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
-    "metaData":{
+    "container":{
         flex:1,
-        backgroundColor:'white',
-        height:500
-        
+        justifyContent:'center',
+        alignItems:'center'
     }
 })
 export default styles
