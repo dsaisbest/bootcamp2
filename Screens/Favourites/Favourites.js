@@ -1,17 +1,17 @@
 import {View, FlatList, TouchableOpacity, TextInput} from 'react-native';
 import * as React from 'react';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import styles from '../Home/Styles';
 import Info from '../Home/Info';
-
+import { loadFavouriteData } from '../../reducers/counter';
+ 
 export default function Favourites({navigation}) {
   let renderingData = useSelector(state => state.counter.favourites);
   const [search, setSearch] = React.useState('');
   searchData = renderingData.filter(element =>
     element.name.toLowerCase().startsWith(search.toLowerCase()),
   );
-
-  console.log(renderingData, 'getting data');
+    const dispatch = useDispatch()
   return (
     <View style={styles.container}>
     <TextInput
@@ -22,6 +22,8 @@ export default function Favourites({navigation}) {
       />
       <FlatList
         data={searchData}
+        refreshing={false}
+        onRefresh={()=>{dispatch(loadFavouriteData(renderingData)); console.log('hello world from favourite component')}}
         renderItem={({item}) => {
           return (
             <TouchableOpacity
