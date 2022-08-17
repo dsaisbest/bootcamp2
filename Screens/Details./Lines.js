@@ -4,11 +4,14 @@ import {
   ActivityIndicator,
   Button,
   ScrollView,
+  TouchableOpacity,
+  Text,
 } from 'react-native';
 import React from 'react';
 import {LineChart} from 'react-native-chart-kit';
 import {getDetails} from '../../reducers/details';
 import {useDispatch, useSelector} from 'react-redux';
+import { white } from 'react-native-paper/lib/typescript/styles/colors';
 
 function getLink(id, days) {
   return `https://api.coingecko.com/api/v3/coins/${id}/market_chart?vs_currency=usd&days=${days}&interval=daily`;
@@ -89,6 +92,19 @@ export default function Lines(props) {
           onPress={() => dispatch(getDetails(getLink(props.id, 365)))}
         />
       </View>
+      <View style={{flex:1,flexDirection:'row',justifyContent:'space-between',margin:21}}>
+      <View>
+      <TouchableOpacity style={{backgroundColor:'purple',height:53,paddingVertical:15,flex:1,alignItems:'center',width:Dimensions.get('window').width*0.4}}>
+      <Text style={{fontSize:20,color:"white"}}>Buy</Text>
+     </TouchableOpacity>
+     </View>
+     <View>
+     <TouchableOpacity style={{backgroundColor:'purple',height:53,paddingVertical:15,flex:1,alignItems:'center',width:Dimensions.get('window').width*0.4}}>
+      <Text style={{fontSize:20,color:"white"}}>Sell</Text>
+     </TouchableOpacity>
+     </View>
+      </View>
+    
     </ScrollView>
   );
 }
