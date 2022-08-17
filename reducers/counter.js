@@ -1,5 +1,25 @@
 import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
 import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+const storeData = async value => {
+  try {
+    const jsonValue = JSON.stringify(value);
+
+    await AsyncStorage.setItem('favourites', jsonValue);
+  } catch (e) {
+    console.log(e);
+  }
+};
+const seeding = createAsyncThunk(
+  'data/fetchfavourite',
+  async (link, thunkAPI) => {
+    return AsyncStorage.getItem('favourites')
+      .then(res => JSON.parse(res))
+      .catch(err => console.log('this error happened because', err));
+  },
+);
+
 const getData = createAsyncThunk('data/fetchData', async (link, thunkAPI) => {
   const data = await axios
     .get(link)
@@ -41,10 +61,9 @@ const resetData = createAsyncThunk('data/eraseData', async (link, thunkAPI) => {
 const loadFavouriteData = createAsyncThunk(
   'data/favourite',
   async (favouriteData, thunkAPI) => {
-   
     const link = 'https://api.coingecko.com/api/v3/simple/price';
     const ids = String(favouriteData.map(ele => ele.id));
-    console.log(ids)
+    console.log(ids);
     const obj = {
       ids: ids,
       vs_currencies: 'usd',
@@ -85,6 +104,7 @@ export const counterSlice = createSlice({
           ele => ele.symbol != action.payload,
         );
       }
+      storeData(state.favourites);
     },
   },
   extraReducers: builder => {
@@ -116,16 +136,23 @@ export const counterSlice = createSlice({
       console.log('error in fetching data');
     });
     builder.addCase(loadFavouriteData.fulfilled, (state, action) => {
-      console.log(action.payload);
-      state.favourites.map((ele,id)=>{
-        state.favourites[id].averagePrice = action.payload[ele.id].usd
-      })
+      state.favourites.map((ele, id) => {
+        state.favourites[id].averagePrice = action.payload[ele.id].usd;
+      });
+    });
+    builder.addCase(seeding.fulfilled, (state, action) => {
+      if (action.payload) {
+        state.favourites = action.payload;
+      }
+    });
+    builder.addCase(seeding.rejected, (state, action) => {
+      console.log('rejected', action.error);
     });
   },
 });
 
 // Action creators are generated for each case reducer function
 
-export {getData, resetData, loadFavouriteData};
+export {getData, resetData, loadFavouriteData, seeding};
 export const {makeFavourite} = counterSlice.actions;
 export default counterSlice.reducer;

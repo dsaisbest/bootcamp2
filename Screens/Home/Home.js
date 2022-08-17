@@ -9,7 +9,7 @@ import {
 import * as React from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import styles from './Styles';
-import {resetData, getData} from '../../reducers/counter';
+import {resetData, getData, seeding} from '../../reducers/counter';
 import Info from './Info';
 
 export default function Home({navigation}) {
@@ -20,7 +20,9 @@ export default function Home({navigation}) {
   const link = `https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=12&page=${pageNo}&sparkline=false`;
   const link2 = `https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=12&page=1&sparkline=false`;
   React.useEffect(() => {
+    dispatch(seeding());
     dispatch(getData(link));
+    
   }, []);
   const [search, setSearch] = React.useState('');
   const renderingData = apiData.filter(element =>

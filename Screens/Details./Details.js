@@ -1,11 +1,25 @@
 import {View, Text, ScrollView} from 'react-native';
-import React from 'react';
+import React, {useEffect} from 'react';
 import Lines from './Lines';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useDispatch } from 'react-redux';
+import { seedFavourite } from '../../reducers/counter';
+
 export default function Details({route, navigation}) {
-  console.log('coming from details',route.params);
+  const getData = async () => {
+    try {
+      const jsonValue = await AsyncStorage.getItem('favourites');
+      return jsonValue != null ? JSON.parse(jsonValue) : null;
+    } catch (e) {
+      console.log(e);
+    }
+  };
+  useEffect(() => {
+  
+  }, []);
 
   return (
-    <View style={{backgroundColor:'white',flex:1}}>
+    <View style={{backgroundColor: 'white', flex: 1}}>
       <Text
         style={{
           backgroundColor: 'white',
@@ -15,9 +29,8 @@ export default function Details({route, navigation}) {
         }}>
         {route.params.name}
       </Text>
-      
-      <Lines id={route.params.id} change={route.params.change}/>
-     
+
+      <Lines id={route.params.id} change={route.params.change} />
     </View>
   );
 }
