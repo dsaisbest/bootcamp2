@@ -5,10 +5,9 @@ import styles from '../Home/Styles';
 import Info from '../Home/Info';
 
 export default function Favourites({navigation}) {
-  const apiData = useSelector(state => state.counter.apiData);
-  let renderingData = apiData.filter(element => element.favourite);
+  let renderingData = useSelector(state => state.counter.favourites);
   const [search, setSearch] = React.useState('');
-  renderingData = renderingData.filter(element =>
+  searchData = renderingData.filter(element =>
     element.name.toLowerCase().startsWith(search.toLowerCase()),
   );
 
@@ -22,7 +21,7 @@ export default function Favourites({navigation}) {
         onChangeText={setSearch}
       />
       <FlatList
-        data={renderingData}
+        data={searchData}
         renderItem={({item}) => {
           return (
             <TouchableOpacity

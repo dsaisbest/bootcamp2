@@ -44,15 +44,18 @@ export const counterSlice = createSlice({
     apiData: [],
     loading: false,
     page: 1,
+    favourites:[]
   },
   reducers: {
     makeFavourite(state, action) {
-      state.apiData.forEach((element,inde)=>{
-        if(element.symbol===action.payload){
-          state.apiData[inde]['favourite']=!state.apiData[inde]['favourite']
-          return
-        }
-      })
+     const index = state.favourites.findIndex((ele,ind)=>ele.symbol===action.payload);
+    const elementindex = state.apiData.findIndex(ele=>ele.symbol===action.payload) 
+     if(index===-1){
+      state.favourites.push(state.apiData[elementindex])
+      }
+     else{
+      state.favourites = state.favourites.filter(ele=>ele.symbol!=action.payload)
+     }
     },
   },
   extraReducers: builder => {
