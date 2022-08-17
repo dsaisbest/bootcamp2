@@ -52,15 +52,24 @@ export const counterSlice = createSlice({
     const elementindex = state.apiData.findIndex(ele=>ele.symbol===action.payload) 
      if(index===-1){
       state.favourites.push(state.apiData[elementindex])
+      state.apiData[elementindex].favourite = true;
       }
      else{
+      if(elementindex!==-1)
+      state.apiData[elementindex].favourite = false
       state.favourites = state.favourites.filter(ele=>ele.symbol!=action.payload)
      }
     },
   },
   extraReducers: builder => {
     builder.addCase(getData.fulfilled, (state, action) => {
-      state.apiData.push(...action.payload);
+      let favouriteData = new Set()
+      state.favourites.forEach(ele=>favouriteData.add(ele.id));
+      let filteredData = action.payload.map(ele=>{
+       ele['favourite']= favouriteData.has(ele.id)
+       return ele;
+      })
+      state.apiData.push(...filteredData);
       state.loading = false;
       state.page = state.page + 1;
     });
@@ -68,7 +77,13 @@ export const counterSlice = createSlice({
       state.loading = true;
     });
     builder.addCase(resetData.fulfilled, (state, action) => {
-      state.apiData = action.payload;
+      let favouriteData = new Set()
+      state.favourites.forEach(ele=>favouriteData.add(ele.id));
+      let filteredData = action.payload.map(ele=>{
+       ele['favourite']= favouriteData.has(ele.id)
+       return ele;
+      })
+      state.apiData = filteredData
       state.page = 2;
     });
     builder.addCase(resetData.rejected, (state, action) => {
