@@ -11,7 +11,6 @@ import React from 'react';
 import {LineChart} from 'react-native-chart-kit';
 import {getDetails} from '../../reducers/details';
 import {useDispatch, useSelector} from 'react-redux';
-import { white } from 'react-native-paper/lib/typescript/styles/colors';
 
 function getLink(id, days) {
   return `https://api.coingecko.com/api/v3/coins/${id}/market_chart?vs_currency=usd&days=${days}&interval=daily`;
