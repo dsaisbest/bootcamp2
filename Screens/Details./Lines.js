@@ -1,9 +1,18 @@
-import {View, Dimensions,ActivityIndicator} from 'react-native';
+import {
+  View,
+  Dimensions,
+  ActivityIndicator,
+  Button,
+  ScrollView,
+} from 'react-native';
 import React from 'react';
 import {LineChart} from 'react-native-chart-kit';
 import {getDetails} from '../../reducers/details';
 import {useDispatch, useSelector} from 'react-redux';
 
+function getLink(id, days) {
+  return `https://api.coingecko.com/api/v3/coins/${id}/market_chart?vs_currency=usd&days=${days}&interval=daily`;
+}
 export default function Lines(props) {
   const dataList = useSelector(state => state.details.details);
   const dispatch = useDispatch();
@@ -11,11 +20,10 @@ export default function Lines(props) {
   React.useEffect(() => {
     const link = `https://api.coingecko.com/api/v3/coins/${props.id}/market_chart?vs_currency=usd&days=1&interval=hourly`;
     dispatch(getDetails(link));
-    console.log('check it');
   }, []);
   return (
-    <View style={{flex:1,justifyContent:'center',alignItems:'center'}}>
-      {dataList.length===0 ? (
+    <ScrollView>
+      {dataList.length === 0 ? (
         <ActivityIndicator size="large" color="#00ff00" />
       ) : (
         <LineChart
@@ -26,12 +34,15 @@ export default function Lines(props) {
               },
             ],
           }}
+          withInnerLines={false}
           width={Dimensions.get('window').width} // from react-native
-          height={Dimensions.get('window').height}
+          height={Dimensions.get('window').height * 0.6}
           yAxisLabel="$"
           yAxisSuffix=""
           yAxisInterval={1} // optional, defaults to 1
           chartConfig={{
+            fillShadowGradientFrom:'white',
+            fillShadowGradientTo:'white',
             backgroundColor: 'black',
             backgroundGradientFromOpacity: 1,
             backgroundGradientFrom: 'white',
@@ -39,17 +50,18 @@ export default function Lines(props) {
             decimalPlaces: 2, // optional, defaults to 2dp
             color: (opacity = 0.1) => {
               return props.change > 0
-                ? `rgba(90, 255, 0,${opacity})`
+                ? `rgba(0, 100, 0,${opacity})`
                 : `rgba(255, 0, 0,${opacity})`;
             },
             labelColor: (opacity = 1) => {
               return props.change > 0
-                ? `rgba(90, 255, 0,${opacity})`
+                ? `rgba(0, 100, 0,${opacity})`
                 : `rgba(255, 0, 0,${opacity})`;
             },
             style: {
               borderRadius: 20,
               backgroundColor: 'pink',
+              margin: 0,
             },
             propsForDots: {
               r: '0',
@@ -57,9 +69,26 @@ export default function Lines(props) {
               stroke: 'black',
             },
           }}
-          bezier
         />
       )}
-    </View>
+      <View style={{justifyContent: 'space-around', flexDirection: 'row'}}>
+        <Button
+          title="1D"
+          onPress={() => dispatch(getDetails(getLink(props.id, 1)))}
+        />
+        <Button
+          title="7D"
+          onPress={() => dispatch(getDetails(getLink(props.id, 7)))}
+        />
+        <Button
+          title="30D"
+          onPress={() => dispatch(getDetails(getLink(props.id, 30)))}
+        />
+        <Button
+          title="365D"
+          onPress={() => dispatch(getDetails(getLink(props.id, 365)))}
+        />
+      </View>
+    </ScrollView>
   );
 }

@@ -5,7 +5,7 @@ export default function Details({route, navigation}) {
   console.log('coming from details',route.params);
 
   return (
-    <View>
+    <View style={{backgroundColor:'white',flex:1}}>
       <Text
         style={{
           backgroundColor: 'white',
@@ -15,9 +15,9 @@ export default function Details({route, navigation}) {
         }}>
         {route.params.name}
       </Text>
-      <View style={{flex:1,justifyContent:'center',alignItems:'center'}}>
+      
       <Lines id={route.params.id} change={route.params.change}/>
-      </View>
+     
     </View>
   );
 }
