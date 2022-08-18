@@ -25,6 +25,8 @@ export default function Lines(props) {
   }, []);
   return (
     <ScrollView>
+    
+<View style={{height:500,justifyContent:'center'}}>
       {dataList.length === 0 ? (
         <ActivityIndicator size="large" color="#00ff00" />
       ) : (
@@ -72,7 +74,10 @@ export default function Lines(props) {
             },
           }}
         />
+       
       )}
+      </View>
+      <View style={{backgroundColor:'black'}}>
       <View style={{justifyContent: 'space-around', flexDirection: 'row'}}>
         <Button
           title="1D"
@@ -103,7 +108,7 @@ export default function Lines(props) {
      </TouchableOpacity>
      </View>
       </View>
-    
+      </View>
     </ScrollView>
   );
 }

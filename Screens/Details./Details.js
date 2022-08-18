@@ -29,8 +29,10 @@ export default function Details({route, navigation}) {
         }}>
         {route.params.name}
       </Text>
-
-      <Lines id={route.params.id} change={route.params.change} />
+        
+        <Lines id={route.params.id} change={route.params.change} />
+       
+      
     </View>
   );
 }
