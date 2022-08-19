@@ -28,7 +28,7 @@ export default function Home({navigation}) {
   const renderingData = apiData.filter(element =>
     element.name.toLowerCase().startsWith(search.toLowerCase()),
   );
-  
+  console.log(renderingData);
   return (
     <View style={styles.container}>
       <TextInput
@@ -37,7 +37,7 @@ export default function Home({navigation}) {
         value={search}
         onChangeText={setSearch}
       />
-      <FlatList
+      {renderingData.length>0?<FlatList
         data={renderingData}
         onEndReached={() => {
           dispatch(getData(link));
@@ -70,13 +70,11 @@ export default function Home({navigation}) {
           );
         }}
         keyExtractor={(item, id) => id}
-      />
+      />:<ActivityIndicator size="large" color="black" />}
 
-      {loading ? (
+      {loading && 
         <ActivityIndicator size="large" color="coral" />
-      ) : (
-        <Text></Text>
-      )}
+      }
     </View>
   );
 }
