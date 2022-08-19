@@ -77,7 +77,7 @@ export default function Lines(props) {
        
       )}
       </View>
-      <View style={{backgroundColor:'black'}}>
+      <View>
       <View style={{justifyContent: 'space-around', flexDirection: 'row'}}>
         <Button
           title="1D"
